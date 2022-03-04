@@ -86,6 +86,15 @@ def build_model():
         ('clf', MultiOutputClassifier(AdaBoostClassifier(n_estimators=60)))
     ])
 
+    parameters_ada = {
+        'clf__estimator__n_estimators': [60, 70, 80]
+    }
+
+    cv_ada_grid = GridSearchCV(pipeline_ada, param_grid=parameters_ada, verbose=12, n_jobs=-1)
+
+    cv_ada_grid.fit(X_train, Y_train)
+
+    y_pred_ada_grid = cv_ada_grid.predict(X_test)
 
     model = pipeline_ada
     
